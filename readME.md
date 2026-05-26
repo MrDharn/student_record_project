@@ -1,4 +1,4 @@
-The endpoint we are going to follow is 
+The endpoint we are going to follow is /api/v1/student
 student attributes will be 
 firstname, lastname, email, student_id,department
 
