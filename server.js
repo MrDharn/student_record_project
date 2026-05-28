@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 5000
 
 //Middleware in order to accept request from the body
 app.use(express.json());
+let students = [];
 
 
 
@@ -36,7 +37,6 @@ console.log(typeof (studentsRecords[0].student_id))
 //get all students endPoint
 
 
-
 //create student record endpoint
 
 
@@ -62,6 +62,33 @@ app.get('/api/v1/students/:student_id', (req, res) => {
 
 
 //delete student record endpoint
+app.delete('/api/v1/student/:id', (req, res) =>{
+
+    //get student id from request
+    const studentId = req.params.id;
+
+    //check if student exsit in the array
+    const studentExists = students.find(student => student.student_id == studentId);
+
+    //if student does not exist return error
+    if(!studentExists){
+        return res.status(404).json({
+            success: false,
+            message: "Student not found"
+        })
+    }
+
+    //remove the student from the students array
+    students = students.filter(
+        student => student.student_id != studentId
+    );
+
+    //return success response
+    res.status(200).json({
+        success: true,
+        message: "Student deleted successfully"
+    })
+})
 
 
 
