@@ -32,7 +32,7 @@ let studentsRecords = [
     }
 ];
 
-console.log(studentsRecords[0])
+console.log(typeof (studentsRecords[0].student_id))
 
 //get all students endPoint
 
@@ -40,7 +40,22 @@ console.log(studentsRecords[0])
 //create student record endpoint
 
 
-//get student by student_id endpoint
+//get student by student_id endpoint //By Adekanye Oluwatosin
+
+app.get('/api/v1/students/:student_id', (req, res) => {
+    const studentId = req.params.student_id;
+    const studentFetched = studentsRecords.find(student => student.student_id === studentId);
+    if (!studentFetched) {
+        return res.status(404).json({ 
+            status: 'failed',
+            message: 'Student not found' });
+    }
+    res.status(200).json({
+        status: 'success',
+        message: 'Student record fetched successfully',
+        student: studentFetched
+    });
+});
 
 
 //update student record endpoint
