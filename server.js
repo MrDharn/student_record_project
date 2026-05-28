@@ -21,14 +21,17 @@ app.get('/', (req,res)=>{
     res.send("This is Student Record API")
 })
 
-//student records array to store the student records in memory
+//student records array to store the student records in memory (student attributes)
 let studentsRecords = [
     {
         student_id: Date.now() - Math.floor(Math.random() * 1000000),
-        name: "Dharn",
+        firstname: "Dharn",
+        lastname: "myDharn",
         email: "dharn@example.com"
     }
 ];
+
+console.log(studentsRecords[0])
 
 //get all students endPoint
 
@@ -44,20 +47,7 @@ let studentsRecords = [
 
 
 //delete student record endpoint
-app.delete('/api/v1/students/:student_id', (req, res) => { 
-    const studentId = Number(req.params.student_id);
-    // Logic to delete the student record from the database using the studentId
-    const studentIndex = studentsRecords.findIndex(student => student.student_id === studentId);
-    if (studentIndex !== -1) {
-       const deletedStudent = studentsRecords.splice(studentIndex, 1);
-        res.status(200).json({ message: "Student record deleted successfully",
-            //THis is to return the deleted student record in the response
-            student: deletedStudent[0]
-         });
-    } else {
-        res.status(404).json({ message: "Student record not found" });
-    }
-});
+
 
 
 //listen
