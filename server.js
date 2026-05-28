@@ -22,6 +22,18 @@ app.get('/', (req,res)=>{
     res.send("This is Student Record API")
 })
 
+//student records array to store the student records in memory (student attributes)
+let studentsRecords = [
+    {
+        student_id: Date.now() - Math.floor(Math.random() * 1000000),
+        firstname: "Dharn",
+        lastname: "myDharn",
+        email: "dharn@example.com"
+    }
+];
+
+console.log(studentsRecords[0])
+
 //get all students endPoint
 
 
@@ -62,6 +74,8 @@ app.delete('/api/v1/student/:id', (req, res) =>{
         message: "Student deleted successfully"
     })
 })
+
+
 
 //listen
 app.listen(PORT, ()=> {
