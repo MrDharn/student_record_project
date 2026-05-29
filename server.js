@@ -1,9 +1,10 @@
 require('dotenv').config();
+
 const express  = require('express')
 const app = express();
 
 //declare port using global environment
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT; 
 
 //Middleware in order to accept request from the body
 app.use(express.json());
