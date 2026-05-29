@@ -34,8 +34,14 @@ let studentsRecords = [
 
 console.log(typeof (studentsRecords[0].student_id))
 
-//get all students endPoint
+//get all students endPoint //By Marvelous Anthony
+app.get('/api/v1/students', (req, res) => {
 
+    res.status(200).json({
+        total_students: studentsRecords.length,
+        students: studentsRecords
+    });
+});
 
 //create student record endpoint
 
