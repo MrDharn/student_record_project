@@ -61,7 +61,7 @@ app.get('/api/v1/students/:student_id', (req, res) => {
 //update student record endpoint
 
 
-//delete student record endpoint
+//delete student record endpoint //By Rose Mary
 app.delete('/api/v1/student/:id', (req, res) =>{
 
     //get student id from request
