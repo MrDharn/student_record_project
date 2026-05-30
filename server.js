@@ -93,11 +93,11 @@ app.get("/api/v1/students/:student_id", (req, res) => {
 */
 app.patch("/api/v1/student/:id", (req, res) => {
   const studentId = parseInt(req.params.id);
-  const studentExist = studentsRecords.find(
+  const student = studentsRecords.find(
     (student) => student.studentid === studentId,
   );
   //   if record does not exist return error
-  if (!studentExist)
+  if (!student)
     return res.status(404).json({
       status: "failed",
       message: "Student not found",
@@ -107,8 +107,8 @@ app.patch("/api/v1/student/:id", (req, res) => {
   // validate that the fields being updated are Not existing student records
 
   // update student record with new data from request body
-  Object.assign(studentExist, req.body);
-  res.status(200).json([studentExist]);
+  Object.assign(student, req.body);
+  res.status(200).json([student]);
 });
 
 //delete student record endpoint //By Rose Mary
