@@ -111,6 +111,16 @@ app.patch("/api/v1/student/:id", (req, res) => {
     });
   }
 
+  // Cannot update with an existing email address that belongs to another student
+  for (const obj of studentsRecords) {
+    if (obj.email === req.body.email && obj.studentid !== studentId) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Email address already exists.",
+      });
+    }
+  }
+
   // Validate request body: ensure all provided fields have non-empty values before applying updates to the student record
   for (const item in req.body) {
     if (!req.body[item]) {
