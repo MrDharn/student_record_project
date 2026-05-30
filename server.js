@@ -103,10 +103,19 @@ app.patch("/api/v1/student/:id", (req, res) => {
       message: "Student not found",
     });
 
+  // prevent update if request body is empty
+  if (Object.keys(req.body).length === 0) {
+    return res.status(400).json({
+      status: "failed",
+      message: "No fields provided for update",
+    });
+  }
+
   // validate request body to ensure it contains at least one field to update
   // validate that the fields being updated are Not existing student records
 
   // update student record with new data from request body
+  delete req.body.studentid;
   Object.assign(student, req.body);
   res.status(200).json({
     status: "success",
