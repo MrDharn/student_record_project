@@ -91,7 +91,7 @@ app.get("/api/v1/students/:student_id", (req, res) => {
 - Onyekachi Jasper-Duruzor 
 - Laureen Otieno
 */
-app.patch("/api/v1/student/:id", (req, res) => {
+app.patch("/api/v1/students/:id", (req, res) => {
   const studentId = parseInt(req.params.id);
   const student = studentsRecords.find(
     (student) => student.studentid === studentId,
@@ -152,7 +152,7 @@ app.patch("/api/v1/student/:id", (req, res) => {
 });
 
 //delete student record endpoint //By Rose Mary And Adekanye Oluwatosin
-app.delete("/api/v1/student/:id", (req, res) => {
+app.delete("/api/v1/students/:id", (req, res) => {
   //get student id from request
   const studentId = req.params.id;
 
