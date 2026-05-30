@@ -120,6 +120,16 @@ app.delete('/api/v1/student/:id', (req, res) =>{
     });
 });
 
+//error handling middleware/GAZO BENJAMIN GREAT
+//I still think we need an error handling middleware to catch any unexpected errors that may occur during the request processing.
+//  This will help us to log the error and return a proper response to the client instead of crashing the server.
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        status: 'error',
+        message: 'Something went wrong!'
+    });
+});
 //listen
 app.listen(PORT, ()=> {
     console.log(`The server has started running on port ${PORT}`)
