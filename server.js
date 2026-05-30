@@ -132,7 +132,9 @@ for (const item in req.body) {
   });
 });
 
-//delete student record endpoint //By Rose Mary
+
+
+//delete student record endpoint //By Rose Mary And Adekanye Oluwatosin
 app.delete("/api/v1/student/:id", (req, res) => {
   //get student id from request
   const studentId = req.params.id;
