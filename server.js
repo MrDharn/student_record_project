@@ -87,8 +87,18 @@ app.get('/api/v1/students/:student_id', (req, res) => {
 
 
 //update student record endpoint
-
-
+/* By 
+- Onyekachi Jasper-Duruzor 
+- Laureen Otieno
+*/
+app.patch("/api/v1/student/:id", (req, res) => {
+  const studentId = parseInt(req.params.id);
+    const studentIndex = studentsRecords.find(student => student.studentid === studentId);
+    Object.assign(studentIndex, req.body);
+    res.status(200).json(
+        [studentIndex]
+    )
+});
 
 //delete student record endpoint //By Rose Mary
 app.delete('/api/v1/student/:id', (req, res) =>{
