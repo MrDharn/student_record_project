@@ -91,7 +91,7 @@ app.get("/api/v1/students/:student_id", (req, res) => {
 - Onyekachi Jasper-Duruzor 
 - Laureen Otieno
 */
-app.patch("/api/v1/student/:id", (req, res) => {
+app.patch("/api/v1/students/:id", (req, res) => {
   const studentId = parseInt(req.params.id);
   const student = studentsRecords.find(
     (student) => student.studentid === studentId,
@@ -111,9 +111,18 @@ app.patch("/api/v1/student/:id", (req, res) => {
     });
   }
 
+  // Cannot update with an existing email address that belongs to another student
+  for (const obj of studentsRecords) {
+    if (obj.email === req.body.email && obj.studentid !== studentId) {
+      return res.status(400).json({
+        status: "failed",
+        message: "Email address already exists.",
+      });
+    }
+  }
 
-// Validate request body: ensure all provided fields have non-empty values before applying updates to the student record
-for (const item in req.body) {
+  // Validate request body: ensure all provided fields have non-empty values before applying updates to the student record
+  for (const item in req.body) {
     if (!req.body[item]) {
       return res.status(400).json({
         status: "failed",
@@ -121,21 +130,29 @@ for (const item in req.body) {
       });
     }
   }
-    
 
   // update student record with new data from request body
-  delete req.body.studentid;
-  Object.assign(student, req.body);
+  //Only allow fields for update
+  const allowedFields = ["firstname", "lastname", "email", "department"];
+
+  const updates = {};
+
+  for (const field of allowedFields) {
+    if (field in req.body) {
+      updates[field] = req.body[field];
+    }
+  }
+
+  Object.assign(student, updates);
+
   res.status(200).json({
     status: "success",
     data: student,
   });
 });
 
-
-
 //delete student record endpoint //By Rose Mary And Adekanye Oluwatosin
-app.delete("/api/v1/student/:id", (req, res) => {
+app.delete("/api/v1/students/:id", (req, res) => {
   //get student id from request
   const studentId = req.params.id;
 
