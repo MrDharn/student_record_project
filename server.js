@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 //student records array to store the student records in memory (student attributes)
 let studentsRecords = [
   {
-    studentid: Date.now() - Math.floor(Math.random() * 1000000),
+    student_id: Date.now() - Math.floor(Math.random() * 1000000),
     firstname: "Dharn",
     lastname: "myDharn",
     email: "dharn@example.com",
@@ -43,13 +43,21 @@ app.get("/api/v1/students", (req, res) => {
 
 //create student record endpoint/Gazo Benjamin Great
 
-app.post("/api/v1/students/create", (req, res) => {
+app.post("/api/v1/students", (req, res) => {
   const { firstname, lastname, email, department } = req.body;
   if (!firstname || !lastname || !email || !department)
     return res.status(404).json({
       status: "failed",
       message: "All fields are required to be filled",
     });
+
+    //check if email is already in existence(since its unique)
+    const emailExistence = studentsRecords.find((studentEmail)=> studentEmail.email === email);
+    if(emailExistence) return res.status(400).json({
+      status: "Failed",
+      message: `The Email ' ${email} '  is already in use , Use different email`
+    })
+
   const newStudentRecord = {
     student_id: Date.now() - Math.floor(Math.random() * 1000000),
     firstname,
@@ -68,8 +76,9 @@ app.post("/api/v1/students/create", (req, res) => {
 
 //get student by student_id endpoint //By Adekanye Oluwatosin
 
-app.get("/api/v1/students/:student_id", (req, res) => {
-  const studentId = req.params.student_id;
+app.get("/api/v1/students/:id", (req, res) => {
+  const studentId = Number(req.params.id);
+  console.log(typeof studentId)
   const studentFetched = studentsRecords.find(
     (student) => student.student_id === studentId,
   );
@@ -94,7 +103,7 @@ app.get("/api/v1/students/:student_id", (req, res) => {
 app.patch("/api/v1/students/:id", (req, res) => {
   const studentId = parseInt(req.params.id);
   const student = studentsRecords.find(
-    (student) => student.studentid === studentId,
+    (student) => student.student_id === studentId,
   );
   //   if record does not exist return error
   if (!student)
@@ -113,7 +122,7 @@ app.patch("/api/v1/students/:id", (req, res) => {
 
   // Cannot update with an existing email address that belongs to another student
   for (const obj of studentsRecords) {
-    if (obj.email === req.body.email && obj.studentid !== studentId) {
+    if (obj.email === req.body.email && obj.student_id !== studentId) {
       return res.status(400).json({
         status: "failed",
         message: "Email address already exists.",
@@ -154,7 +163,7 @@ app.patch("/api/v1/students/:id", (req, res) => {
 //delete student record endpoint //By Rose Mary And Adekanye Oluwatosin
 app.delete("/api/v1/students/:id", (req, res) => {
   //get student id from request
-  const studentId = req.params.id;
+  const studentId = Number(req.params.id);
 
   //check if student exsit in the array
   const studentExistence = studentsRecords.find(
@@ -170,7 +179,7 @@ app.delete("/api/v1/students/:id", (req, res) => {
   }
 
   //remove student from the array
-  studentsRecords.filter((student) => student.student_id != studentId);
+  studentsRecords = studentsRecords.filter((student) => student.student_id != studentId);
 
   //return success response with deleted student
   res.status(200).json({
