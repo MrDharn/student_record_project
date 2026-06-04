@@ -23,3 +23,9 @@ Instead of using a database, student data is stored in memory for simplicity.
 - **run npm install (to install the necessary dependency)
 - ** create your .env file (Although without it, it can work perfectly).
 - ** run npm start 
+
+## API DOCUMENTATION
+- ** https://documenter.getpostman.com/view/53195349/2sBXwpNBL7
+
+## API DEPLOYMENT SITE
+- ** https://student-record-project.vercel.app/
